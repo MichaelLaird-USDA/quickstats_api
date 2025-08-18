@@ -15,9 +15,12 @@ base_url <- "https://quickstats.nass.usda.gov/api/api_GET/"
 params <- list(
   key = api_key,
   year__GE = 2022,
+  source_desc = "CENSUS",
   state_name = "IOWA",
-  commodity_desc = "LAND IN FARMS",
-  statisticcat_desc = "AREA OPERATED",
+  county_name = "ADAIR",
+  commodity_desc = "FARM OPERATIONS",
+  short_desc = "FARM OPERATIONS - ACRES OPERATED",
+  domaincat_desc = "NOT SPECIFIED",
   format = "json"
 )
 
