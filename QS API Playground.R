@@ -10,14 +10,114 @@ Sys.getenv('qstat_api')
 # Load required libraries
 library(httr)
 library(jsonlite)
-
-#global variable for county name
-c_name <<- "ALLAMAKEE"
-
+library(tibble)
 
 # Define your API key and base URL
 api_key <- paste0(Sys.getenv('qstat_api'))
 base_url <- "https://quickstats.nass.usda.gov/api/api_GET/"
+
+#global variable for county name
+#c_name <<- "ADAIR"
+c_name <<- "ADAMS"
+#c_name <<- "ALLAMAKEE"
+#c_name <<- "APPANOOSE"
+#c_name <<- "AUDUBON"
+#c_name <<- "BENTON"
+#c_name <<- "BLACK HAWK"
+#c_name <<- "BOONE"
+#c_name <<- "BREMER"
+#c_name <<- "BUCHANAN"
+#c_name <<- "BUENA VISTA"
+#c_name <<- "BUTLER"
+#c_name <<- "CALHOUN"
+#c_name <<- "CARROLL"
+#c_name <<- "CASS"
+#c_name <<- "CEDAR"
+#c_name <<- "CERRO GORDO"
+#c_name <<- "CHEROKEE"
+#c_name <<- "CHICKASAW"
+#c_name <<- "CLARKE"
+#c_name <<- "CLAY"
+#c_name <<- "CLAYTON"
+#c_name <<- "CLINTON"
+#c_name <<- "CRAWFORD"
+#c_name <<- "DALLAS"
+#c_name <<- "DAVIS"
+#c_name <<- "DECATUR"
+#c_name <<- "DELAWARE"
+#c_name <<- "DES MOINES"
+#c_name <<- "DICKINSON"
+#c_name <<- "DUBUQUE"
+#c_name <<- "EMMET"
+#c_name <<- "FAYETTE"
+#c_name <<- "FLOYD"
+#c_name <<- "FRANKLIN"
+#c_name <<- "FREMONT"
+#c_name <<- "GREENE"
+#c_name <<- "GRUNDY"
+#c_name <<- "GUTHRIE"
+#c_name <<- "HAMILTON"
+#c_name <<- "HANCOCK"
+#c_name <<- "HARDIN"
+#c_name <<- "HARRISON"
+#c_name <<- "HENRY"
+#c_name <<- "HOWARD"
+#c_name <<- "HUMBOLDT"
+#c_name <<- "IDA"
+#c_name <<- "IOWA"
+#c_name <<- "JACKSON"
+#c_name <<- "JASPER"
+#c_name <<- "JEFFERSON"
+#c_name <<- "JOHNSON"
+#c_name <<- "JONES"
+#c_name <<- "KEOKUK"
+#c_name <<- "KOSSUTH"
+#c_name <<- "LEE"
+#c_name <<- "LINN"
+#c_name <<- "LOUISA"
+#c_name <<- "LUCAS"
+#c_name <<- "LYON"
+#c_name <<- "MADISON"
+#c_name <<- "MAHASKA"
+#c_name <<- "MARION"
+#c_name <<- "MARSHALL"
+#c_name <<- "MILLS"
+#c_name <<- "MITCHELL"
+#c_name <<- "MONONA"
+#c_name <<- "MONROE"
+#c_name <<- "MONTGOMERY"
+#c_name <<- "MUSCATINE"
+#c_name <<- "O BRIEN"
+#c_name <<- "OSCEOLA"
+#c_name <<- "PAGE"
+#c_name <<- "PALO ALTO"
+#c_name <<- "PLYMOUTH"
+#c_name <<- "POCAHONTAS"
+#c_name <<- "POLK"
+#c_name <<- "POTTAWATTAMIE"
+#c_name <<- "POWESHIEK"
+#c_name <<- "RINGGOLD"
+#c_name <<- "SAC"
+#c_name <<- "SCOTT"
+#c_name <<- "SHELBY"
+#c_name <<- "SIOUX"
+#c_name <<- "STORY"
+#c_name <<- "TAMA"
+#c_name <<- "TAYLOR"
+#c_name <<- "UNION"
+#c_name <<- "VAN BUREN"
+#c_name <<- "WAPELLO"
+#c_name <<- "WARREN"
+#c_name <<- "WASHINGTON"
+#c_name <<- "WAYNE"
+#c_name <<- "WEBSTER"
+#c_name <<- "WINNEBAGO"
+#c_name <<- "WINNESHIEK"
+#c_name <<- "WOODBURY"
+#c_name <<- "WORTH"
+#c_name <<- "WRIGHT"
+
+
 
 # Define the parameters for the API request - this one is for census acres operated
 params <- list(
@@ -43,11 +143,64 @@ if (status_code(response) == 200) {
   
   # Extract the desired data
   df1 <- parsed_data$data
+  df1$all_cattle_rank <- ""
+  df1$beef_cows_rank <- ""
+  df1$milk_cows_rank <- ""
+  df1$corn_prod_rank <- ""
+  df1$soy_prod_rank <- ""
   print(df1)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df1<- NULL
+  df1 <- tibble(
+    asd_desc = character(),
+    prodn_practice_desc = character(),
+    congr_district_code = character(),
+    county_code = character(),
+    freq_desc = character(),
+    year = character(),
+    state_fips_code = character(),
+    agg_level_desc = character(),
+    sector_desc = character(),
+    util_practice_desc = character(),
+    reference_period_desc = character(),
+    domaincat_desc = character(),
+    short_desc = character(),
+    watershed_code = character(),
+    source_desc = character(),
+    end_code = character(),
+    state_name = character(),
+    commodity_desc = character(),
+    location_desc = character(),
+    zip_5 = character(),
+    county_ansi = character(),
+    country_code = character(),
+    region_desc = character(),
+    state_ansi = character(),
+    Value = character(),
+    watershed_desc = character(),
+    class_desc = character(),
+    county_name = character(),
+    'CV (%)' = character(),
+    country_name = character(),
+    load_time = character(),
+    state_alpha = character(),
+    statisticcat_desc = character(),
+    asd_code = character(),
+    begin_code = character(),
+    unit_desc = character(),
+    week_ending = character(),
+    domain_desc = character(),
+    group_desc = character(),
+    all_cattle_rank = character(),
+    beef_cows_rank = character(),
+    milk_cows_rank = character(),
+    corn_prod_rank = character(),
+    soy_prod_rank = character()
+    
+  )
 }
+
+
 
 #another request - this one is for census number of operations 
 params2 <- list(
@@ -75,9 +228,59 @@ if (status_code(response2) == 200) {
   print(df2)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df2<- NULL
+  df2 <- tibble(
+    asd_desc = character(),
+    prodn_practice_desc = character(),
+    congr_district_code = character(),
+    county_code = character(),
+    freq_desc = character(),
+    year = character(),
+    state_fips_code = character(),
+    agg_level_desc = character(),
+    sector_desc = character(),
+    util_practice_desc = character(),
+    reference_period_desc = character(),
+    domaincat_desc = character(),
+    short_desc = character(),
+    watershed_code = character(),
+    source_desc = character(),
+    end_code = character(),
+    state_name = character(),
+    commodity_desc = character(),
+    location_desc = character(),
+    zip_5 = character(),
+    county_ansi = character(),
+    country_code = character(),
+    region_desc = character(),
+    state_ansi = character(),
+    Value = character(),
+    watershed_desc = character(),
+    class_desc = character(),
+    county_name = character(),
+    'CV (%)' = character(),
+    country_name = character(),
+    load_time = character(),
+    state_alpha = character(),
+    statisticcat_desc = character(),
+    asd_code = character(),
+    begin_code = character(),
+    unit_desc = character(),
+    week_ending = character(),
+    domain_desc = character(),
+    group_desc = character(),
+    all_cattle_rank = character(),
+    beef_cows_rank = character(),
+    milk_cows_rank = character(),
+    corn_prod_rank = character(),
+    soy_prod_rank = character()
+    
+  )
 }
-
+df2$all_cattle_rank <- ""
+df2$beef_cows_rank <- ""
+df2$milk_cows_rank <- ""
+df2$corn_prod_rank <- ""
+df2$soy_prod_rank <- ""
 
 #another request - this one is for avg acres/operation
 params3 <- list(
@@ -105,9 +308,13 @@ if (status_code(response3) == 200) {
   print(df3)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df3<- NULL
+  df3 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df3$all_cattle_rank <- ""
+df3$beef_cows_rank <- ""
+df3$milk_cows_rank <- ""
+df3$corn_prod_rank <- ""
+df3$soy_prod_rank <- ""
 
 #another request - this one is for avg operator age
 params4 <- list(
@@ -135,10 +342,14 @@ if (status_code(response4) == 200) {
   print(df4)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df4<- NULL
+  df4 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
 
-
+df4$all_cattle_rank <- ""
+df4$beef_cows_rank <- ""
+df4$milk_cows_rank <- ""
+df4$corn_prod_rank <- ""
+df4$soy_prod_rank <- ""
 
 #another request - this one is for num males
 params5 <- list(
@@ -166,9 +377,13 @@ if (status_code(response5) == 200) {
   print(df5)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df5<- NULL
+  df5 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df5$all_cattle_rank <- ""
+df5$beef_cows_rank <- ""
+df5$milk_cows_rank <- ""
+df5$corn_prod_rank <- ""
+df5$soy_prod_rank <- ""
 
 #another request - this one is for num females
 params6 <- list(
@@ -196,10 +411,14 @@ if (status_code(response6) == 200) {
   print(df6)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df6<- NULL
+  df6 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
 
-
+df6$all_cattle_rank <- ""
+df6$beef_cows_rank <- ""
+df6$milk_cows_rank <- ""
+df6$corn_prod_rank <- ""
+df6$soy_prod_rank <- ""
 
 
 #another request - this one is for hay
@@ -228,10 +447,14 @@ if (status_code(response7) == 200) {
   print(df7)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df7<- NULL
+  df7 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
 
-
+df7$all_cattle_rank <- ""
+df7$beef_cows_rank <- ""
+df7$milk_cows_rank <- ""
+df7$corn_prod_rank <- ""
+df7$soy_prod_rank <- ""
 
 #another request - this one is for total vos all products
 params8 <- list(
@@ -259,9 +482,13 @@ if (status_code(response8) == 200) {
   print(df8)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df8<- NULL
+  df8 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df8$all_cattle_rank <- ""
+df8$beef_cows_rank <- ""
+df8$milk_cows_rank <- ""
+df8$corn_prod_rank <- ""
+df8$soy_prod_rank <- ""
 
 #another request - this one is for total vos all crops
 params9 <- list(
@@ -289,9 +516,13 @@ if (status_code(response9) == 200) {
   print(df9)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df9<- NULL
+  df9 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df9$all_cattle_rank <- ""
+df9$beef_cows_rank <- ""
+df9$milk_cows_rank <- ""
+df9$corn_prod_rank <- ""
+df9$soy_prod_rank <- ""
 
 
 #another request - this one is for total vos all livestock
@@ -320,10 +551,14 @@ if (status_code(response10) == 200) {
   print(df10)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df10<- NULL
+  df10 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
 
-
+df10$all_cattle_rank <- ""
+df10$beef_cows_rank <- ""
+df10$milk_cows_rank <- ""
+df10$corn_prod_rank <- ""
+df10$soy_prod_rank <- ""
 
 #another request - this one is for total prod expenses
 params11 <- list(
@@ -351,9 +586,13 @@ if (status_code(response11) == 200) {
   print(df11)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df11<- NULL
+  df11 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df11$all_cattle_rank <- ""
+df11$beef_cows_rank <- ""
+df11$milk_cows_rank <- ""
+df11$corn_prod_rank <- ""
+df11$soy_prod_rank <- ""
 
 #another request - this one is for total hog inv
 params12 <- list(
@@ -381,9 +620,13 @@ if (status_code(response12) == 200) {
   print(df12)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df12<- NULL
+  df12 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df12$all_cattle_rank <- ""
+df12$beef_cows_rank <- ""
+df12$milk_cows_rank <- ""
+df12$corn_prod_rank <- ""
+df12$soy_prod_rank <- ""
 #another request - this one is for total layer inv
 params13 <- list(
   key = api_key,
@@ -410,9 +653,13 @@ if (status_code(response13) == 200) {
   print(df13)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df13<- NULL
+  df13 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df13$all_cattle_rank <- ""
+df13$beef_cows_rank <- ""
+df13$milk_cows_rank <- ""
+df13$corn_prod_rank <- ""
+df13$soy_prod_rank <- ""
 
 
 #another request - this one is for total cattle survey
@@ -442,10 +689,14 @@ if (status_code(response14) == 200) {
   print(df14)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df14<- NULL
+  df14 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
 
-
+df14$all_cattle_rank <- ""
+df14$beef_cows_rank <- ""
+df14$milk_cows_rank <- ""
+df14$corn_prod_rank <- ""
+df14$soy_prod_rank <- ""
 
 #another request - this one is for total beef cattle survey
 params15 <- list(
@@ -474,10 +725,14 @@ if (status_code(response15) == 200) {
   print(df15)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df15<- NULL
+  df15 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
 
-
+df15$all_cattle_rank <- ""
+df15$beef_cows_rank <- ""
+df15$milk_cows_rank <- ""
+df15$corn_prod_rank <- ""
+df15$soy_prod_rank <- ""
 
 
 #another request - this one is for total milk cattle survey
@@ -507,8 +762,65 @@ if (status_code(response16) == 200) {
   print(df16)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df16<- NULL
+  df16 <- tibble(
+    asd_desc = character(),
+    prodn_practice_desc = character(),
+    congr_district_code = character(),
+    county_code = character(),
+    freq_desc = character(),
+    year = character(),
+    state_fips_code = character(),
+    agg_level_desc = character(),
+    sector_desc = character(),
+    util_practice_desc = character(),
+    reference_period_desc = character(),
+    domaincat_desc = character(),
+    short_desc = character(),
+    watershed_code = character(),
+    source_desc = character(),
+    end_code = character(),
+    state_name = character(),
+    commodity_desc = character(),
+    location_desc = character(),
+    zip_5 = character(),
+    county_ansi = character(),
+    country_code = character(),
+    region_desc = character(),
+    state_ansi = character(),
+    Value = character(),
+    watershed_desc = character(),
+    class_desc = character(),
+    county_name = character(),
+    'CV (%)' = character(),
+    country_name = character(),
+    load_time = character(),
+    state_alpha = character(),
+    statisticcat_desc = character(),
+    asd_code = character(),
+    begin_code = character(),
+    unit_desc = character(),
+    week_ending = character(),
+    domain_desc = character(),
+    group_desc = character(),
+    all_cattle_rank = character(),
+    beef_cows_rank = character(),
+    milk_cows_rank = character(),
+    corn_prod_rank = character(),
+    soy_prod_rank = character()
+    
+  )
+  
 }
+df16$all_cattle_rank <- ""
+df16$beef_cows_rank <- ""
+df16$milk_cows_rank <- ""
+df16$corn_prod_rank <- ""
+df16$soy_prod_rank <- ""
+
+
+
+# Create an empty tibble with specified columns
+
 
 
 
@@ -539,8 +851,13 @@ if (status_code(response17) == 200) {
   print(df17)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df17<- NULL
+  df17 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
+df17$all_cattle_rank <- ""
+df17$beef_cows_rank <- ""
+df17$milk_cows_rank <- ""
+df17$corn_prod_rank <- ""
+df17$soy_prod_rank <- ""
 
 #another request - this one is for total corn harvested
 params18 <- list(
@@ -569,9 +886,13 @@ if (status_code(response18) == 200) {
   print(df18)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df18<- NULL
+  df18 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df18$all_cattle_rank <- ""
+df18$beef_cows_rank <- ""
+df18$milk_cows_rank <- ""
+df18$corn_prod_rank <- ""
+df18$soy_prod_rank <- ""
 
 #another request - this one is for total corn grain yield
 params19 <- list(
@@ -600,9 +921,13 @@ if (status_code(response19) == 200) {
   print(df19)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df19<- NULL
+  df19 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df19$all_cattle_rank <- ""
+df19$beef_cows_rank <- ""
+df19$milk_cows_rank <- ""
+df19$corn_prod_rank <- ""
+df19$soy_prod_rank <- ""
 
 #another request - this one is for total corn grain production
 params20 <- list(
@@ -631,9 +956,13 @@ if (status_code(response20) == 200) {
   print(df20)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df20<- NULL
+  df20 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df20$all_cattle_rank <- ""
+df20$beef_cows_rank <- ""
+df20$milk_cows_rank <- ""
+df20$corn_prod_rank <- ""
+df20$soy_prod_rank <- ""
 
 #another request - this one is for total soy planted
 params21 <- list(
@@ -662,8 +991,13 @@ if (status_code(response21) == 200) {
   print(df21)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df21<- NULL
+  df21 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
+df21$all_cattle_rank <- ""
+df21$beef_cows_rank <- ""
+df21$milk_cows_rank <- ""
+df21$corn_prod_rank <- ""
+df21$soy_prod_rank <- ""
 
 #another request - this one is for total SOYBEANS harvested
 params22 <- list(
@@ -692,9 +1026,13 @@ if (status_code(response22) == 200) {
   print(df22)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df22<- NULL
+  df22 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df22$all_cattle_rank <- ""
+df22$beef_cows_rank <- ""
+df22$milk_cows_rank <- ""
+df22$corn_prod_rank <- ""
+df22$soy_prod_rank <- ""
 
 #another request - this one is for total SOYBEANS yield
 params23 <- list(
@@ -723,9 +1061,13 @@ if (status_code(response23) == 200) {
   print(df23)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df23<- NULL
+  df23 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
-
+df23$all_cattle_rank <- ""
+df23$beef_cows_rank <- ""
+df23$milk_cows_rank <- ""
+df23$corn_prod_rank <- ""
+df23$soy_prod_rank <- ""
 
 #another request - this one is for total SOYBEANS grain production
 params24 <- list(
@@ -754,15 +1096,217 @@ if (status_code(response24) == 200) {
   print(df24)
 } else {
   print(paste("Error:", status_code(response))) # Print error if request fails
-  df24<- NULL
+  df24 <- tibble(     asd_desc = character(),     prodn_practice_desc = character(),     congr_district_code = character(),     county_code = character(),     freq_desc = character(),     year = character(),     state_fips_code = character(),     agg_level_desc = character(),     sector_desc = character(),     util_practice_desc = character(),     reference_period_desc = character(),     domaincat_desc = character(),     short_desc = character(),     watershed_code = character(),     source_desc = character(),     end_code = character(),     state_name = character(),     commodity_desc = character(),     location_desc = character(),     zip_5 = character(),     county_ansi = character(),     country_code = character(),     region_desc = character(),     state_ansi = character(),     Value = character(),     watershed_desc = character(),     class_desc = character(),     county_name = character(),     'CV (%)' = character(),     country_name = character(),     load_time = character(),     state_alpha = character(),     statisticcat_desc = character(),     asd_code = character(),     begin_code = character(),     unit_desc = character(),     week_ending = character(),     domain_desc = character(),     group_desc = character(),     all_cattle_rank = character(),     beef_cows_rank = character(),     milk_cows_rank = character(),     corn_prod_rank = character(),     soy_prod_rank = character()        )
 }
 
+df24$all_cattle_rank <- ""
+df24$beef_cows_rank <- ""
+df24$milk_cows_rank <- ""
+df24$corn_prod_rank <- ""
+df24$soy_prod_rank <- ""
+
+
+#bring in ranks
+
+#another request - this one is for total cattle survey
+params_rank <- list(
+  key = api_key,
+  year__GE = 2025,
+  period = "FIRST OF JAN",
+  source_desc = "SURVEY",
+  state_name = "IOWA",
+  commodity_desc = "CATTLE",
+  short_desc = "CATTLE, INCL CALVES - INVENTORY",
+  domaincat_desc = "NOT SPECIFIED",
+  format = "json"
+)
+# Make the API request
+response_rank <- GET(base_url, query = params_rank)
+
+# Check the status of the API request
+if (status_code(response_rank) == 200) {
+  # Parse the JSON content
+  qs_data_rank <- content(response_rank, "text")
+  parsed_data_rank <- fromJSON(qs_data_rank, flatten = TRUE)
+  
+  # Extract the desired data
+  df_rank <- parsed_data_rank$data
+  df_clean_rank <- df_rank[((df_rank$county_name != "")&(df_rank$county_name != "OTHER COUNTIES")), ]
+  print(df_clean_rank)
+} else {
+  print(paste("Error:", status_code(response_rank))) # Print error if request fails
+  df_clean_rank<- NULL
+}
+
+
+df_clean_rank$value1 <- as.numeric(gsub(",", "", df_clean_rank$Value))
+
+df_clean_rank$all_cattle_rank <- rank(-(df_clean_rank$value1), ties.method = "min") 
+
+
+#another request - this one is for total beef cattle survey
+params15_rank <- list(
+  key = api_key,
+  year__GE = 2025,
+  period = "FIRST OF JAN",
+  source_desc = "SURVEY",
+  state_name = "IOWA",
+  commodity_desc = "CATTLE",
+  short_desc = "CATTLE, COWS, BEEF - INVENTORY",
+  domaincat_desc = "NOT SPECIFIED",
+  format = "json"
+)
+# Make the API request
+response15_rank <- GET(base_url, query = params15_rank)
+
+# Check the status of the API request
+if (status_code(response15_rank) == 200) {
+  # Parse the JSON content
+  qs_data15_rank <- content(response15_rank, "text")
+  parsed_data15_rank <- fromJSON(qs_data15_rank, flatten = TRUE)
+  
+  # Extract the desired data
+  df15_rank <- parsed_data15_rank$data
+  df15_clean_rank <- df15_rank[((df15_rank$county_name != "")&(df15_rank$county_name != "OTHER COUNTIES")), ]
+  print(df15_rank)
+} else {
+  print(paste("Error:", status_code(response15_rank))) # Print error if request fails
+  df15_rank<- NULL
+}
+
+df15_clean_rank$value1 <- as.numeric(gsub(",", "", df15_clean_rank$Value))
+
+df15_clean_rank$beef_cows_rank <- rank(-(df15_clean_rank$value1), ties.method = "min") 
+
+beef_cows_rank<- df15_clean_rank[order(df15_clean_rank$county_name), ]
+
+write.csv(beef_cows_rank, file = "J:/IA_COUNTIES.csv", row.names = FALSE)
+
+
+#another request - this one is for total milk cattle survey
+params16_rank <- list(
+  key = api_key,
+  year__GE = 2025,
+  period = "FIRST OF JAN",
+  source_desc = "SURVEY",
+  state_name = "IOWA",
+  commodity_desc = "CATTLE",
+  short_desc = "CATTLE, COWS, MILK - INVENTORY",
+  domaincat_desc = "NOT SPECIFIED",
+  format = "json"
+)
+# Make the API request
+response16_rank <- GET(base_url, query = params16_rank)
+
+# Check the status of the API request
+if (status_code(response16_rank) == 200) {
+  # Parse the JSON content
+  qs_data16_rank <- content(response16_rank, "text")
+  parsed_data16_rank <- fromJSON(qs_data16_rank, flatten = TRUE)
+  
+  # Extract the desired data
+  df16_rank <- parsed_data16_rank$data
+  df16_clean_rank <- df16_rank[((df16_rank$county_name != "")&(df16_rank$county_name != "OTHER COUNTIES")), ]
+  print(df16_rank)
+} else {
+  print(paste("Error:", status_code(response16_rank))) # Print error if request fails
+  df16_rank<- NULL
+}
+
+df16_clean_rank$value1 <- as.numeric(gsub(",", "", df16_clean_rank$Value))
+
+df16_clean_rank$milk_cows_rank <- rank(-(df16_clean_rank$value1), ties.method = "min") 
+
+
+#another request - this one is for total corn grain production
+params20_rank <- list(
+  key = api_key,
+  year__GE = 2024,
+  period = "YEAR",
+  source_desc = "SURVEY",
+  state_name = "IOWA",
+  commodity_desc = "CORN",
+  short_desc = "CORN, GRAIN - PRODUCTION, MEASURED IN BU",
+  domaincat_desc = "NOT SPECIFIED",
+  format = "json"
+)
+# Make the API request
+response20_rank <- GET(base_url, query = params20_rank)
+
+# Check the status of the API request
+if (status_code(response20_rank) == 200) {
+  # Parse the JSON content
+  qs_data20_rank <- content(response20_rank, "text")
+  parsed_data20_rank <- fromJSON(qs_data20_rank, flatten = TRUE)
+  
+  # Extract the desired data
+  df20_rank <- parsed_data20_rank$data
+  df20_clean_rank <- df20_rank[((df20_rank$county_name != "")&(df20_rank$county_name != "OTHER COUNTIES")), ]
+  print(df20_rank)
+} else {
+  print(paste("Error:", status_code(response20_rank))) # Print error if request fails
+  df20_rank<- NULL
+}
+
+df20_clean_rank$value1 <- as.numeric(gsub(",", "", df20_clean_rank$Value))
+
+df20_clean_rank$corn_prod_rank <- rank(-(df20_clean_rank$value1), ties.method = "min") 
+
+
+#another request - this one is for total SOYBEANS grain production
+params24_rank <- list(
+  key = api_key,
+  year__GE = 2024,
+  period = "YEAR",
+  source_desc = "SURVEY",
+  state_name = "IOWA",
+  commodity_desc = "SOYBEANS",
+  short_desc = "SOYBEANS - PRODUCTION, MEASURED IN BU",
+  domaincat_desc = "NOT SPECIFIED",
+  format = "json"
+)
+# Make the API request
+response24_rank <- GET(base_url, query = params24_rank)
+
+# Check the status of the API request
+if (status_code(response24_rank) == 200) {
+  # Parse the JSON content
+  qs_data24_rank <- content(response24_rank, "text")
+  parsed_data24_rank <- fromJSON(qs_data24_rank, flatten = TRUE)
+  
+  # Extract the desired data
+  df24_rank <- parsed_data24_rank$data
+  df24_clean_rank <- df24_rank[((df24_rank$county_name != "")&(df24_rank$county_name != "OTHER COUNTIES")), ]
+  print(df24)
+} else {
+  print(paste("Error:", status_code(response24_rank))) # Print error if request fails
+  df24_rank<- NULL
+}
+
+
+df24_clean_rank$value1 <- as.numeric(gsub(",", "", df24_clean_rank$Value))
+
+df24_clean_rank$soy_prod_rank <- rank(-(df24_clean_rank$value1), ties.method = "min") 
 
 # Combine the dataframes by stacking them on top of each other
 
 
-combined_df <- rbind(df1, df2, df3, df4, df5, df6, df7, df8, df9, df10, df11, df12, df13, df14, df15, df16, df17, df18, df19, df20, df21, df22, df23, df24)
-selected_columns <- combined_df[, c("year", "source_desc", "state_name", "county_name", "short_desc", "Value")]
-assign(c_name, selected_columns)
+df14 <- subset(df14, select = -all_cattle_rank)
+df15 <- subset(df15, select = -beef_cows_rank)
+df16 <- subset(df16, select = -milk_cows_rank)
+df20 <- subset(df20, select = -corn_prod_rank)
+df24 <- subset(df24, select = -soy_prod_rank)
 
+df14_ranked <- merge(df14, df_clean_rank[, c("year", "source_desc", "state_name", "county_name", "short_desc", "all_cattle_rank")], by = c("year", "source_desc", "state_name", "county_name", "short_desc"), all.x = TRUE)
+df15_ranked <- merge(df15, df15_clean_rank[, c("year", "source_desc", "state_name", "county_name", "short_desc", "beef_cows_rank")], by = c("year", "source_desc", "state_name", "county_name", "short_desc"), all.x = TRUE)
+df16_ranked <- merge(df16, df16_clean_rank[, c("year", "source_desc", "state_name", "county_name", "short_desc", "milk_cows_rank")], by = c("year", "source_desc", "state_name", "county_name", "short_desc"), all.x = TRUE)
+df20_ranked <- merge(df20, df20_clean_rank[, c("year", "source_desc", "state_name", "county_name", "short_desc", "corn_prod_rank")], by = c("year", "source_desc", "state_name", "county_name", "short_desc"), all.x = TRUE)
+df24_ranked <- merge(df24, df24_clean_rank[, c("year", "source_desc", "state_name", "county_name", "short_desc", "soy_prod_rank")], by = c("year", "source_desc", "state_name", "county_name", "short_desc"), all.x = TRUE)
+
+
+combined_df <- rbind(df1, df2, df3, df4, df5, df6, df7, df8, df9, df10, df11, df12, df13, df14_ranked, df15_ranked, df16_ranked, df17, df18, df19, df20_ranked, df21, df22, df23, df24_ranked)
+selected_columns <- combined_df[, c("year", "source_desc", "state_name", "county_name", "short_desc", "Value", "all_cattle_rank", "beef_cows_rank", "milk_cows_rank", "corn_prod_rank", "soy_prod_rank")]
+
+assign(c_name, selected_columns)
+write.csv(selected_columns, file = paste0("J:/",c_name,".csv"), row.names = FALSE)
 

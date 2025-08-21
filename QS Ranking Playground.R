@@ -18,7 +18,7 @@ base_url <- "https://quickstats.nass.usda.gov/api/api_GET/"
 
 
 #another request - this one is for total cattle survey
-params <- list(
+params_rank <- list(
   key = api_key,
   year__GE = 2025,
   period = "FIRST OF JAN",
@@ -30,35 +30,35 @@ params <- list(
   format = "json"
 )
 # Make the API request
-response <- GET(base_url, query = params)
+response_rank <- GET(base_url, query = params_rank)
 
 # Check the status of the API request
-if (status_code(response) == 200) {
+if (status_code(response_rank) == 200) {
   # Parse the JSON content
-  data <- content(response, "text")
-  parsed_data <- fromJSON(data, flatten = TRUE)
+  qs_data_rank <- content(response_rank, "text")
+  parsed_data_rank <- fromJSON(qs_data_rank, flatten = TRUE)
   
   # Extract the desired data
-  df <- parsed_data$data
-  df_clean <- df[((df$county_name != "")&(df$county_name != "OTHER COUNTIES")), ]
-  print(df_clean)
+  df_rank <- parsed_data_rank$data
+  df_clean_rank <- df_rank[((df_rank$county_name != "")&(df_rank$county_name != "OTHER COUNTIES")), ]
+  print(df_clean_rank)
 } else {
-  print(paste("Error:", status_code(response))) # Print error if request fails
-  df_clean<- NULL
+  print(paste("Error:", status_code(response_rank))) # Print error if request fails
+  df_clean_rank<- NULL
 }
 
 
-df_clean$value1 <- as.numeric(gsub(",", "", df_clean$Value))
+df_clean_rank$value1 <- as.numeric(gsub(",", "", df_clean_rank$Value))
 
-df_clean$Rank <- rank(-(df_clean$value1), ties.method = "min") 
+df_clean_rank$all_cattle_rank <- rank(-(df_clean_rank$value1), ties.method = "min") 
 
-df_sorted <- df_clean[order(df_clean$county_name), ]
+all_cattle_rank <- df_clean_rank[order(df_clean_rank$county_name), ]
 
 # Combine the dataframes by stacking them on top of each other
 
 
 #another request - this one is for total beef cattle survey
-params15 <- list(
+params15_rank <- list(
   key = api_key,
   year__GE = 2025,
   period = "FIRST OF JAN",
@@ -70,33 +70,34 @@ params15 <- list(
   format = "json"
 )
 # Make the API request
-response15 <- GET(base_url, query = params15)
+response15_rank <- GET(base_url, query = params15_rank)
 
 # Check the status of the API request
-if (status_code(response15) == 200) {
+if (status_code(response15_rank) == 200) {
   # Parse the JSON content
-  data15 <- content(response15, "text")
-  parsed_data15 <- fromJSON(data15, flatten = TRUE)
+  qs_data15_rank <- content(response15_rank, "text")
+  parsed_data15_rank <- fromJSON(qs_data15_rank, flatten = TRUE)
   
   # Extract the desired data
-  df15 <- parsed_data15$data
-  df15_clean <- df15[((df15$county_name != "")&(df15$county_name != "OTHER COUNTIES")), ]
-  print(df15)
+  df15_rank <- parsed_data15_rank$data
+  df15_clean_rank <- df15_rank[((df15_rank$county_name != "")&(df15_rank$county_name != "OTHER COUNTIES")), ]
+  print(df15_rank)
 } else {
-  print(paste("Error:", status_code(response))) # Print error if request fails
-  df15<- NULL
+  print(paste("Error:", status_code(response15_rank))) # Print error if request fails
+  df15_rank<- NULL
 }
 
-df15_clean$value1 <- as.numeric(gsub(",", "", df15_clean$Value))
+df15_clean_rank$value1 <- as.numeric(gsub(",", "", df15_clean_rank$Value))
 
-df15_clean$Rank <- rank(-(df15_clean$value1), ties.method = "min") 
+df15_clean_rank$beef_cows_rank <- rank(-(df15_clean_rank$value1), ties.method = "min") 
 
-df15_sorted <- df15_clean[order(df15_clean$county_name), ]
+beef_cows_rank<- df15_clean_rank[order(df15_clean_rank$county_name), ]
 
+write.csv(beef_cows_rank, file = "J:/IA_COUNTIES.csv", row.names = FALSE)
 
 
 #another request - this one is for total milk cattle survey
-params16 <- list(
+params16_rank <- list(
   key = api_key,
   year__GE = 2025,
   period = "FIRST OF JAN",
@@ -108,34 +109,34 @@ params16 <- list(
   format = "json"
 )
 # Make the API request
-response16 <- GET(base_url, query = params16)
+response16_rank <- GET(base_url, query = params16_rank)
 
 # Check the status of the API request
-if (status_code(response16) == 200) {
+if (status_code(response16_rank) == 200) {
   # Parse the JSON content
-  data16 <- content(response16, "text")
-  parsed_data16 <- fromJSON(data16, flatten = TRUE)
+  qs_data16_rank <- content(response16_rank, "text")
+  parsed_data16_rank <- fromJSON(qs_data16_rank, flatten = TRUE)
   
   # Extract the desired data
-  df16 <- parsed_data16$data
-  df16_clean <- df16[((df16$county_name != "")&(df16$county_name != "OTHER COUNTIES")), ]
-  print(df16)
+  df16_rank <- parsed_data16_rank$data
+  df16_clean_rank <- df16_rank[((df16_rank$county_name != "")&(df16_rank$county_name != "OTHER COUNTIES")), ]
+  print(df16_rank)
 } else {
-  print(paste("Error:", status_code(response))) # Print error if request fails
-  df16<- NULL
+  print(paste("Error:", status_code(response16_rank))) # Print error if request fails
+  df16_rank<- NULL
 }
 
-df16_clean$value1 <- as.numeric(gsub(",", "", df16_clean$Value))
+df16_clean_rank$value1 <- as.numeric(gsub(",", "", df16_clean_rank$Value))
 
-df16_clean$Rank <- rank(-(df16_clean$value1), ties.method = "min") 
+df16_clean_rank$milk_cows_rank <- rank(-(df16_clean_rank$value1), ties.method = "min") 
 
-df16_sorted <- df16_clean[order(df16_clean$county_name), ]
+milk_cows_rank <- df16_clean_rank[order(df16_clean_rank$county_name), ]
 
 
 
 
 #another request - this one is for total corn grain production
-params20 <- list(
+params20_rank <- list(
   key = api_key,
   year__GE = 2024,
   period = "YEAR",
@@ -147,26 +148,63 @@ params20 <- list(
   format = "json"
 )
 # Make the API request
-response20 <- GET(base_url, query = params20)
+response20_rank <- GET(base_url, query = params20_rank)
 
 # Check the status of the API request
-if (status_code(response20) == 200) {
+if (status_code(response20_rank) == 200) {
   # Parse the JSON content
-  data20 <- content(response20, "text")
-  parsed_data20 <- fromJSON(data20, flatten = TRUE)
+  qs_data20_rank <- content(response20_rank, "text")
+  parsed_data20_rank <- fromJSON(qs_data20_rank, flatten = TRUE)
   
   # Extract the desired data
-  df20 <- parsed_data20$data
-  df20_clean <- df20[((df20$county_name != "")&(df20$county_name != "OTHER COUNTIES")), ]
-  print(df20)
+  df20_rank <- parsed_data20_rank$data
+  df20_clean_rank <- df20_rank[((df20_rank$county_name != "")&(df20_rank$county_name != "OTHER COUNTIES")), ]
+  print(df20_rank)
 } else {
-  print(paste("Error:", status_code(response))) # Print error if request fails
-  df20<- NULL
+  print(paste("Error:", status_code(response20_rank))) # Print error if request fails
+  df20_rank<- NULL
 }
 
-df20_clean$value1 <- as.numeric(gsub(",", "", df20_clean$Value))
+df20_clean_rank$value1 <- as.numeric(gsub(",", "", df20_clean_rank$Value))
 
-df20_clean$Rank <- rank(-(df20_clean$value1), ties.method = "min") 
+df20_clean_rank$corn_prod_rank <- rank(-(df20_clean_rank$value1), ties.method = "min") 
 
-df20_sorted <- df20_clean[order(df20_clean$county_name), ]
+corn_prod_rank <- df20_clean_rank[order(df20_clean_rank$county_name), ]
 
+
+#another request - this one is for total SOYBEANS grain production
+params24_rank <- list(
+  key = api_key,
+  year__GE = 2024,
+  period = "YEAR",
+  source_desc = "SURVEY",
+  state_name = "IOWA",
+  commodity_desc = "SOYBEANS",
+  short_desc = "SOYBEANS - PRODUCTION, MEASURED IN BU",
+  domaincat_desc = "NOT SPECIFIED",
+  format = "json"
+)
+# Make the API request
+response24_rank <- GET(base_url, query = params24_rank)
+
+# Check the status of the API request
+if (status_code(response24_rank) == 200) {
+  # Parse the JSON content
+  qs_data24_rank <- content(response24_rank, "text")
+  parsed_data24_rank <- fromJSON(qs_data24_rank, flatten = TRUE)
+  
+  # Extract the desired data
+  df24_rank <- parsed_data24_rank$data
+  df24_clean_rank <- df24_rank[((df24_rank$county_name != "")&(df24_rank$county_name != "OTHER COUNTIES")), ]
+  print(df24)
+} else {
+  print(paste("Error:", status_code(response24_rank))) # Print error if request fails
+  df24_rank<- NULL
+}
+
+
+df24_clean_rank$value1 <- as.numeric(gsub(",", "", df24_clean_rank$Value))
+
+df24_clean_rank$soy_prod_rank <- rank(-(df24_clean_rank$value1), ties.method = "min") 
+
+soy_prod_rank <- df24_clean_rank[order(df24_clean_rank$county_name), ]
