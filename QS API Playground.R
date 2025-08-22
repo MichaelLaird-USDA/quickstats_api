@@ -35,7 +35,7 @@ base_url <- "https://quickstats.nass.usda.gov/api/api_GET/"
 #c_name <<- "CEDAR"
 #c_name <<- "CERRO GORDO"
 #c_name <<- "CHEROKEE"
-c_name <<- "CHICKASAW"
+#c_name <<- "CHICKASAW"
 #c_name <<- "CLARKE"
 #c_name <<- "CLAY"
 #c_name <<- "CLAYTON"
@@ -115,7 +115,7 @@ c_name <<- "CHICKASAW"
 #c_name <<- "WINNESHIEK"
 #c_name <<- "WOODBURY"
 #c_name <<- "WORTH"
-#c_name <<- "WRIGHT"
+c_name <<- "WRIGHT"
 
 
 
