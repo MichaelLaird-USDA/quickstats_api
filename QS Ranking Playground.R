@@ -196,7 +196,7 @@ if (status_code(response24_rank) == 200) {
   # Extract the desired data
   df24_rank <- parsed_data24_rank$data
   df24_clean_rank <- df24_rank[((df24_rank$county_name != "")&(df24_rank$county_name != "OTHER COUNTIES")), ]
-  print(df24)
+  print(df24_rank)
 } else {
   print(paste("Error:", status_code(response24_rank))) # Print error if request fails
   df24_rank<- NULL
